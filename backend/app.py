@@ -7,7 +7,19 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.metrics.pairwise import cosine_similarity
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, 
+     origins="*",
+     allow_headers=["Content-Type", "Accept"],
+     methods=["GET", "POST", "OPTIONS"],
+     supports_credentials=False
+)
+
+@app.after_request
+def after_request(response):
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type,Authorization")
+    response.headers.add("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
+    return response
 
 # ─── Load model bundle ────────────────────────────────────────────────────────
 data = pickle.load(open("model.pkl", "rb"))

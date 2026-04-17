@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import {
   Chart as ChartJS,
   CategoryScale, LinearScale,
@@ -14,7 +14,6 @@ ChartJS.register(
   ArcElement, Tooltip, Legend
 );
 
-const API = process.env.REACT_APP_API_URL || "http://127.0.0.1:5000";
 
 /* ─── shared chart defaults ─────────────────────────────────────── */
 const baseOpts = (xLabel, yLabel) => ({
@@ -62,8 +61,8 @@ export default function Analytics() {
   const [metrics, setMetrics] = useState(null);
 
   useEffect(() => {
-    axios.get(`${API}/analytics`).then(r => setData(r.data));
-    axios.get(`${API}/metrics`).then(r  => setMetrics(r.data));
+    api.get("/analytics").then(r => setData(r.data));
+    api.get("/metrics").then(r  => setMetrics(r.data));
   }, []);
 
   if (!data || !metrics) {

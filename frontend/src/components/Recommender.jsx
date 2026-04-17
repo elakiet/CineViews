@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
-
-const API = process.env.REACT_APP_API_URL || "http://127.0.0.1:5000";
+import api from "../api";
 const TMDB_KEY = "a065849509d791df96e46ffea588ad9c";
 
 const fetchPoster = async (title) => {
@@ -71,7 +69,7 @@ export default function Recommender() {
   const [ran,     setRan]     = useState(false);
 
   useEffect(() => {
-    axios.get(`${API}/options`).then(res => setUsers(res.data.users));
+    api.get("/options").then(res => setUsers(res.data.users));
   }, []);
 
   const handleRecommend = useCallback(async () => {
@@ -81,7 +79,7 @@ export default function Recommender() {
     setRecs([]);
     setRan(false);
     try {
-      const res = await axios.get(`${API}/recommend`, { params: { user_id: userId, top_n: topN } });
+      const res = await api.get("/recommend", { params: { user_id: userId, top_n: topN } });
       setRecs(res.data.recommendations);
       setRan(true);
     } catch {

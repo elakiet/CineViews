@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
+import api from "../api";
 import { useNavigate } from "react-router-dom";
 
-const API = process.env.REACT_APP_API_URL || "http://127.0.0.1:5000";
 const TMDB_KEY = "a065849509d791df96e46ffea588ad9c";
 
 /* ── helpers ────────────────────────────────────────────────────────── */
@@ -65,7 +64,7 @@ export default function Predictor() {
   const [error,   setError]   = useState("");
 
   useEffect(() => {
-    axios.get(`${API}/options`).then(res => {
+    api.get("/options").then(res => {
       setUsers(res.data.users);
       setMovies(res.data.movies);
     });
@@ -80,7 +79,7 @@ export default function Predictor() {
 
     try {
       const [predRes] = await Promise.all([
-        axios.post(`${API}/predict`, { user_id: userId, movie_id: movieId }),
+        api.post("/predict", { user_id: userId, movie_id: movieId }),
       ]);
       const data  = predRes.data;
       const img   = await getPoster(data.movie_title);
