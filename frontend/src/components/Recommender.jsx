@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 
-const API = "https://CineViews.onrender.com";
+const API = process.env.REACT_APP_API_URL || "http://127.0.0.1:5000";
 const TMDB_KEY = "a065849509d791df96e46ffea588ad9c";
 
 const fetchPoster = async (title) => {

@@ -14,7 +14,7 @@ ChartJS.register(
   ArcElement, Tooltip, Legend
 );
 
-const API = "https://CineViews.onrender.com";
+const API = process.env.REACT_APP_API_URL || "http://127.0.0.1:5000";
 
 /* ─── shared chart defaults ─────────────────────────────────────── */
 const baseOpts = (xLabel, yLabel) => ({
