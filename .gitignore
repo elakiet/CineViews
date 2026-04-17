@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+*.pkl
+venv/
+.env
+
+# Node
+node_modules/
+build/
+.env.local
+
+# Mac
+.DS_Store
