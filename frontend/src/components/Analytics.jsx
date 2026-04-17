@@ -61,10 +61,15 @@ export default function Analytics() {
   const [data,    setData]    = useState(null);
   const [metrics, setMetrics] = useState(null);
 
-  useEffect(() => {
-    axios.get(`${API}/analytics`).then(r => setData(r.data));
-    axios.get(`${API}/metrics`).then(r  => setMetrics(r.data));
-  }, []);
+ useEffect(() => {
+  Promise.all([
+    axios.get(`${API}/analytics`),
+    axios.get(`${API}/metrics`)
+  ]).then(([analyticsRes, metricsRes]) => {
+    setData(analyticsRes.data);
+    setMetrics(metricsRes.data);
+  });
+}, []);
 
   if (!data || !metrics) {
     return (
