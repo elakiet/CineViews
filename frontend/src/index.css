@@ -1,0 +1,147 @@
+/* ─── CineAI Design Tokens ───────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg:          #0a0c12;
+  --surface: rgba(8, 10, 18, 0.93);
+  --surface2:    rgba(255,255,255,0.04);
+  --border:      rgba(255,255,255,0.08);
+  --accent:      #00e8b5;
+  --accent2:     #ff7a3d;
+  --text:        #f0f2f8;
+  --muted:       #8892a4;
+  --danger:      #ff4d6d;
+  --success:     #00e8b5;
+  --grad:        linear-gradient(135deg, #00e8b5, #ff7a3d);
+  --radius:      14px;
+  --radius-sm:   8px;
+  --shadow:      0 8px 40px rgba(0,0,0,0.5);
+  --glow:        0 0 24px rgba(0,232,181,0.18);
+  --font-display: 'Bebas Neue', cursive;
+  --font-body:    'DM Sans', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #000;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 80px 20px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+}
+
+.page::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('../public/bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  filter: blur(6px) brightness(0.45) saturate(1.2);
+  transform: scale(1.05);
+  z-index: -1;
+}
+
+.card {
+  position: relative;
+  z-index: 1;
+  background: var(--surface);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 36px;
+  box-shadow: var(--shadow), var(--glow);
+}
+
+/* ─── Gradient button ───────────────────────────────────────────── */
+.btn-grad {
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: var(--radius);
+  border: none;
+  background: var(--grad);
+  color: #000;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  letter-spacing: 0.3px;
+}
+.btn-grad:hover { transform: translateY(-2px); box-shadow: 0 0 22px rgba(0,232,181,0.45); }
+.btn-grad:active { transform: translateY(0); opacity: 0.9; }
+.btn-grad:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+/* ─── Select ────────────────────────────────────────────────────── */
+.select {
+  width: 100%;
+  padding: 13px 16px;
+  margin-bottom: 14px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238892a4' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  transition: border-color 0.2s;
+}
+.select:focus { border-color: var(--accent); }
+
+/* ─── Star rating display ───────────────────────────────────────── */
+.stars { display: flex; gap: 4px; }
+.star  { font-size: 20px; }
+
+/* ─── Metric chip ───────────────────────────────────────────────── */
+.metric-chip {
+  flex: 1;
+  padding: 18px;
+  border-radius: var(--radius);
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  text-align: center;
+}
+.metric-chip h4 { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.metric-chip p  { font-size: 26px; font-family: var(--font-display); letter-spacing: 1px; color: var(--accent); }
+
+/* ─── Badge ─────────────────────────────────────────────────────── */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  background: rgba(0,232,181,0.12);
+  color: var(--accent);
+  border: 1px solid rgba(0,232,181,0.25);
+}
+
+/* ─── Loading spinner ───────────────────────────────────────────── */
+.spinner {
+  width: 36px; height: 36px;
+  border: 3px solid var(--border);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin: 30px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── Fade-in animation ─────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up { animation: fadeUp 0.4s ease both; }
