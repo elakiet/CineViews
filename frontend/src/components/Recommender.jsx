@@ -5,12 +5,15 @@ const TMDB_KEY = "a065849509d791df96e46ffea588ad9c";
 const fetchPoster = async (title) => {
   try {
     const clean = title.replace(/\s*\(\d{4}\)/, "").trim();
-    const res   = await axios.get("https://api.themoviedb.org/3/search/movie", {
-      params: { api_key: TMDB_KEY, query: clean },
-    });
-    const hit = res.data.results[0];
-    if (hit?.poster_path) return `https://image.tmdb.org/t/p/w300${hit.poster_path}`;
-  } catch {}
+    const res = await fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_KEY}&query=${encodeURIComponent(clean)}`
+    );
+    const data = await res.json();
+    if (data.results.length > 0) {
+      const path = data.results[0].poster_path;
+      if (path) return `https://image.tmdb.org/t/p/w300${path}`;
+    }
+  } catch { /* silent */ }
   return null;
 };
 
