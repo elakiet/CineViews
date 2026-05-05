@@ -38,17 +38,17 @@ const RatingBar = ({ value }) => {
 const getPoster = async (movieName) => {
   try {
     const clean = movieName.replace(/\s*\(\d{4}\)/, "").trim();
-    const res   = await axios.get("https://api.themoviedb.org/3/search/movie", {
-      params: { api_key: TMDB_KEY, query: clean },
-    });
-    if (res.data.results.length > 0) {
-      const path = res.data.results[0].poster_path;
+    const res = await fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_KEY}&query=${encodeURIComponent(clean)}`
+    );
+    const data = await res.json();
+    if (data.results.length > 0) {
+      const path = data.results[0].poster_path;
       if (path) return `https://image.tmdb.org/t/p/w500${path}`;
     }
   } catch { /* silent fail */ }
   return null;
 };
-
 
 /* ── Component ───────────────────────────────────────────────────────── */
 export default function Predictor() {
