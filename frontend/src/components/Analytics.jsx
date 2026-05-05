@@ -170,16 +170,6 @@ export default function Analytics() {
             <Line data={distChart} options={baseOpts("Star Rating", "Count")} />
           </ChartCard>
 
-          <ChartCard title="Top 10 Most Rated Movies" height={280}>
-            <Bar
-              data={topMoviesChart}
-              options={{
-                ...baseOpts("", "# Ratings"),
-                indexAxis: "y",
-                plugins: { legend: { display: false } },
-              }}
-            />
-          </ChartCard>
         </div>
 
         {/* ── Model info ── */}
