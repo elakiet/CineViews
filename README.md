@@ -209,7 +209,9 @@ Evaluated on the full MovieLens 100K dataset (100,000 ratings):
 | Backend | Render.com | https://cineviews.onrender.com |
 | Posters | TMDB API | https://themoviedb.org |
 
-> ⚠️ The backend is on a free tier — it may take 30-60 seconds to wake up on first request after inactivity.
+> ⚠️ **Browser Compatibility Note:** The live demo works best on **Google Chrome**. On other browsers (Safari, Brave, Firefox), the dropdown menus in the Predictor and Recommender pages may take longer to populate, and the Analytics dashboard may take additional time to load. This is due to the free-tier backend sleeping after inactivity and stricter CORS handling in non-Chrome browsers.
+>
+> **For best experience:** Open https://cineviews.onrender.com first and wait for it to respond before using the app. This wakes up the backend server.
 
 ---
 
