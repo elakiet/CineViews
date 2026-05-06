@@ -15,7 +15,7 @@ ChartJS.register(
 );
 
 
-/* ─── shared chart defaults ─────────────────────────────────────── */
+/* shared chart defaults */
 const baseOpts = (xLabel, yLabel) => ({
   responsive: true,
   maintainAspectRatio: false,
@@ -37,7 +37,6 @@ const baseOpts = (xLabel, yLabel) => ({
   },
 });
 
-/* ─── Metric card ────────────────────────────────────────────────── */
 const MetricCard = ({ label, value, desc, accent = "#00e8b5" }) => (
   <div style={s.metricCard}>
     <p style={{ fontSize: 10, letterSpacing: 1.5, textTransform: "uppercase", color: "#8892a4", marginBottom: 8 }}>{label}</p>
@@ -46,7 +45,6 @@ const MetricCard = ({ label, value, desc, accent = "#00e8b5" }) => (
   </div>
 );
 
-/* ─── Chart card ─────────────────────────────────────────────────── */
 const ChartCard = ({ title, height = 240, children }) => (
   <div style={s.chartCard}>
     <p style={s.chartTitle}>{title}</p>
@@ -55,7 +53,6 @@ const ChartCard = ({ title, height = 240, children }) => (
 );
 
 
-/* ═══ Main ══════════════════════════════════════════════════════════ */
 export default function Analytics() {
   const [data,    setData]    = useState(null);
   const [metrics, setMetrics] = useState(null);
@@ -76,7 +73,6 @@ export default function Analytics() {
     );
   }
 
-  /* ── chart datasets ── */
   const ageChart = {
     labels: data.age_groups,
     datasets: [{
@@ -132,7 +128,7 @@ export default function Analytics() {
         <h1 style={s.heading}>📊 Analytics Dashboard</h1>
         <p style={{ ...s.sub, color: "#a0aec0" }}>Model performance & user behaviour insights from the MovieLens dataset</p>
 
-        {/* ── Metrics row ── */}
+        {/*  Metrics row  */}
         <div style={s.metricsRow}>
           <MetricCard label="MAE"    value={metrics.mae}  desc="Mean Absolute Error" />
           <MetricCard label="RMSE"   value={metrics.rmse} desc="Root Mean Squared Error" accent="#ffd166" />
@@ -140,7 +136,7 @@ export default function Analytics() {
           <MetricCard label="Total Ratings" value={(data.dist_counts.reduce((a,b)=>a+b,0)).toLocaleString()} desc="in dataset" accent="#a78bfa" />
         </div>
 
-        {/* ── Charts grid ── */}
+        {/*  Charts grid  */}
         <div style={s.grid}>
             
           <div style={{ gridColumn: "1 / -1" }}>
@@ -172,7 +168,7 @@ export default function Analytics() {
 
         </div>
 
-        {/* ── Model info ── */}
+        {/* Model info */}
         <div style={s.modelInfo}>
           <p style={s.modelTitle}>Model Details</p>
           <div style={s.modelGrid}>
