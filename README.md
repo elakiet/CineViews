@@ -54,8 +54,22 @@ pip3 install flask flask-cors scikit-learn pandas numpy
 # Download from: https://grouplens.org/datasets/movielens/100k/
 # Required files: u.data, u.user, u.item
 
-# Step 1 — Train the model (generates model.pkl)
+### 🧠 Main Modeling Script — `train_model.py`
+
+This is the **core ML training script**. It:
+- Loads the MovieLens 100K dataset (ratings + user demographics)
+- Merges and encodes features (gender binary, occupation one-hot)
+- Computes user average rating and movie average rating
+- Trains a **Random Forest Regressor** (100 trees) on 80% of data
+- Evaluates on 20% test set — MAE=0.396, RMSE=0.570, R²=0.744
+- Saves the trained model bundle to `model.pkl`
+
+> Run this **once** before starting the server. `app.py` loads the saved model — no retraining happens on the server.
+
+```bash
+# Step 1 — Run the main modeling script (only needed once)
 python3 train_model.py
+# Output: ✅ model.pkl saved successfully
 
 # Step 2 — Start the Flask API server
 python3 app.py
