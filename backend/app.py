@@ -16,7 +16,6 @@ def after_request(response):
     response.headers.add("Access-Control-Allow-Methods", "GET,POST,OPTIONS")
     return response
 
-# ─── Load model bundle ────────────────────────────────────────────────────────
 print("Loading model...")
 data = pickle.load(open("model.pkl", "rb"))
 model        = data["model"]
@@ -25,7 +24,6 @@ user_avg     = data["user_avg"]
 movie_avg    = data["movie_avg"]
 users        = data["users"]
 
-# ─── Load raw data ────────────────────────────────────────────────────────────
 print("Loading datasets...")
 ratings = pd.read_csv(
     "data/u.data", sep="\t",
@@ -36,7 +34,6 @@ movies_df = pd.read_csv(
     header=None, usecols=[0, 1], names=["movie_id", "title"]
 )
 
-# ─── Build similarity matrix ──────────────────────────────────────────────────
 print("Building similarity matrix...")
 user_movie_matrix = ratings.pivot_table(
     index="user_id", columns="movie_id", values="rating"
@@ -48,7 +45,6 @@ user_similarity_df = pd.DataFrame(
     columns=user_movie_matrix.index
 )
 
-# ─── PRE-COMPUTE everything at startup ───────────────────────────────────────
 print("Pre-computing analytics cache...")
 
 def compute_analytics():
@@ -99,12 +95,11 @@ def compute_metrics():
         "r2":   round(float(r2_score(y, preds)), 3),
     }
 
-# ── Cache at startup ──────────────────────────────────────────────────────────
+# Cache at startup 
 ANALYTICS_CACHE = compute_analytics()
 METRICS_CACHE   = compute_metrics()
-print("✅ All caches ready — server is fast!")
+print("All caches ready — server is fast!")
 
-# ─── Helper ───────────────────────────────────────────────────────────────────
 def build_feature_row(user_id, movie_id):
     user_info        = users[users["user_id"] == user_id].iloc[0]
     user_avg_rating  = user_avg.get(user_id, 3)
@@ -123,10 +118,7 @@ def build_feature_row(user_id, movie_id):
         row[occ_col] = 1
     return pd.DataFrame([row])
 
-# ═══════════════════════════════════════════════════════════════════════════════
 # ROUTES
-# ═══════════════════════════════════════════════════════════════════════════════
-
 @app.route("/")
 def home():
     return jsonify({"status": "CineViews API running 🚀"})
@@ -191,7 +183,6 @@ def recommend():
     predictions.sort(key=lambda x: (-x["predicted_rating"], -x["popularity"]))
     return jsonify({"user_id": user_id, "recommendations": predictions[:top_n]})
 
-# ── Instant cached routes ──────────────────────────────────────────────────────
 @app.route("/analytics", methods=["GET"])
 def analytics():
     return jsonify(ANALYTICS_CACHE)
