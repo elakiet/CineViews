@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 const TMDB_KEY = "a065849509d791df96e46ffea588ad9c";
 
-/* ── helpers ────────────────────────────────────────────────────────── */
 const StarRating = ({ value }) => {
   const full = Math.floor(value);
   const half = value - full >= 0.4;
@@ -50,7 +49,7 @@ const getPoster = async (movieName) => {
   return null;
 };
 
-/* ── Component ───────────────────────────────────────────────────────── */
+/*  Component  */
 export default function Predictor() {
   const navigate = useNavigate();
 
