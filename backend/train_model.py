@@ -11,7 +11,6 @@ from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-# ─── Load datasets ────────────────────────────────────────────────────────────
 print("📂  Loading datasets…")
 
 ratings = pd.read_csv(
@@ -26,7 +25,6 @@ users = pd.read_csv(
     names=["user_id", "age", "gender", "occupation", "zip"],
 )
 
-# ─── Feature engineering ─────────────────────────────────────────────────────
 print("🔧  Engineering features…")
 
 data = pd.merge(ratings, users, on="user_id")
@@ -48,17 +46,14 @@ feature_cols = (
 X = data[feature_cols]
 y = data["rating"]
 
-# ─── Train / test split ───────────────────────────────────────────────────────
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
 
-# ─── Model training ───────────────────────────────────────────────────────────
 print("🚀  Training RandomForestRegressor (100 estimators)…")
 model = RandomForestRegressor(n_estimators=100, random_state=42, n_jobs=-1)
 model.fit(X_train, y_train)
 
-# ─── Evaluation ───────────────────────────────────────────────────────────────
 preds = model.predict(X_test)
 mae   = mean_absolute_error(y_test, preds)
 rmse  = np.sqrt(mean_squared_error(y_test, preds))
@@ -69,14 +64,12 @@ print(f"    MAE  : {mae:.4f}")
 print(f"    RMSE : {rmse:.4f}")
 print(f"    R²   : {r2:.4f}")
 
-# ─── Feature importance report ────────────────────────────────────────────────
 importance = pd.Series(model.feature_importances_, index=feature_cols)
 top5 = importance.nlargest(5)
 print("\n🌟  Top-5 most important features:")
 for feat, val in top5.items():
     print(f"    {feat:<35} {val:.4f}")
 
-# ─── Persist model bundle ─────────────────────────────────────────────────────
 bundle = {
     "model":        model,
     "feature_cols": feature_cols,
